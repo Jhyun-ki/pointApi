@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/pointApi
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100 # X toMany ???? ? ???? In query? ??? > 1+N?? 1+1? ???? ????. // 100~1000? ??? ??, ??????? ?? IN? ????? 1000?? ???????? ??? ??
+    # open-in-view: false
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    # org.hibernate.type: trace
+
+server:
+  port: 8090
