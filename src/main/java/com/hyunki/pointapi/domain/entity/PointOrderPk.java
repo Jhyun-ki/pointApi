@@ -1,4 +1,4 @@
-package com.hyunki.pointapi.domain.compositepk;
+package com.hyunki.pointapi.domain.entity;
 
 
 import lombok.Getter;

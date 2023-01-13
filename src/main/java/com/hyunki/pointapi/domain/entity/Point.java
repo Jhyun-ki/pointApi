@@ -25,7 +25,7 @@ public class Point extends BaseEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private Account account;
 
     private String userName;
 
@@ -41,4 +41,13 @@ public class Point extends BaseEntity {
 
     @OneToMany(mappedBy = "point")
     List<PointOrder> pointOrders = new ArrayList<>();
+
+    public void addPointOrder(PointOrder pointOrder) {
+        this.pointOrders.add(pointOrder);
+        pointOrder.setPoint(this);
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

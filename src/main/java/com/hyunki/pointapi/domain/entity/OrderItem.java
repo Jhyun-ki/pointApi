@@ -28,4 +28,8 @@ public class OrderItem {
     private int order_price;
 
     private int item_count;
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

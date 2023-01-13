@@ -1,6 +1,6 @@
 package com.hyunki.pointapi.domain.entity;
 
-import com.hyunki.pointapi.domain.compositepk.PointOrderPk;
+import com.hyunki.pointapi.domain.entity.PointOrderPk;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +25,12 @@ public class PointOrder {
     private Order order;
 
     private int pointUseAmt;
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
 }

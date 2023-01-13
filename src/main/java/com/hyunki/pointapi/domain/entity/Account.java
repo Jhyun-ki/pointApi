@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Users extends BaseEntity {
+public class Account extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
@@ -21,6 +21,11 @@ public class Users extends BaseEntity {
 
     private int totalPointAmt;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "account")
     private List<Point> points = new ArrayList<>();
+
+    public void addPoint(Point point) {
+        this.points.add(point);
+        point.setAccount(this);
+    }
 }

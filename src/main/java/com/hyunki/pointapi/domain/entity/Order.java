@@ -25,7 +25,7 @@ public class Order extends BaseEntity{
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private Account account;
 
     private String userName;
 
@@ -39,4 +39,14 @@ public class Order extends BaseEntity{
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    public void addPointOrder(PointOrder pointOrder) {
+        this.pointOrders.add(pointOrder);
+        pointOrder.setOrder(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
 }
