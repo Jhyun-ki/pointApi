@@ -24,7 +24,11 @@ public class PointOrder {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private int pointUseAmt;
+    private int usePointAmt;
+
+    private void setPointUseAmt(int pointUseAmt) {
+        this.usePointAmt = pointUseAmt;
+    }
 
     public void setOrder(Order order) {
         this.order = order;
@@ -32,5 +36,13 @@ public class PointOrder {
 
     public void setPoint(Point point) {
         this.point = point;
+    }
+
+    public static PointOrder createPointOrder(Order order, int pointUseAmt) {
+        PointOrder pointOrder = new PointOrder();
+        pointOrder.setOrder(order);
+        pointOrder.setPointUseAmt(pointUseAmt);
+
+        return pointOrder;
     }
 }

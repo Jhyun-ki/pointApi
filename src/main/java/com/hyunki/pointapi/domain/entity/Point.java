@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
@@ -23,11 +24,9 @@ public class Point extends BaseEntity {
     @Column(name = "point_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = ALL) // Point 지급 시에 Account의 totalPointAmt가 수정되어야 한다.
     @JoinColumn(name = "user_id")
     private Account account;
-
-    private String userName;
 
     private int pointAmt;
 
@@ -39,15 +38,67 @@ public class Point extends BaseEntity {
     @Enumerated(STRING)
     private PointStatus pointStatus;
 
-    @OneToMany(mappedBy = "point")
+    @OneToMany(mappedBy = "point", cascade = ALL)
     List<PointOrder> pointOrders = new ArrayList<>();
+
+    //포인트 적립 생성자
+    private Point(Account account, int pointAmt, PointType pointType) {
+        this.account = account;
+        this.pointAmt = pointAmt;
+        this.remainPointAmt = pointAmt;
+        this.pointType = pointType;
+        this.pointStatus = PointStatus.NORMAL;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public void addPointOrder(PointOrder pointOrder) {
         this.pointOrders.add(pointOrder);
         pointOrder.setPoint(this);
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    /**
+     * 남은 포인트 금액 차감 메서드
+     */
+    private void minusRemainPointAmt(int usePointAmt) {
+        int remainPointAmt = this.remainPointAmt - usePointAmt;
+
+        if(usePointAmt < 0) {
+            throw new IllegalStateException("사용 금액에 마이너스 금액이 입력될 수 없습니다.");
+        }
+
+        if(remainPointAmt < 0) {
+            throw new IllegalStateException("남은 포인트 금액은 마이너스 금액이 될 수 없습니다.");
+        }
+
+        this.remainPointAmt = remainPointAmt;
+    }
+
+    /**
+     * 포인트 적립 메서드
+     */
+    public static Point createPoint(Account account, int pointAmt, PointType pointType) {
+        Point point = new Point(account, pointAmt, pointType);
+        account.plusTotalPointAmt(pointAmt);
+
+        return point;
+    }
+
+    /**
+     * 포인트 차감 메서드
+     */
+    public static Point usePoint(Point point, PointOrder... pointOrders) {
+        int totalUsePointAmt = 0;
+        for (PointOrder pointOrder : pointOrders) {
+            point.addPointOrder(pointOrder);
+            totalUsePointAmt += pointOrder.getUsePointAmt();
+        }
+
+        point.getAccount().minusTotalPointAmt(totalUsePointAmt);
+        point.minusRemainPointAmt(totalUsePointAmt);
+
+        return point;
     }
 }
