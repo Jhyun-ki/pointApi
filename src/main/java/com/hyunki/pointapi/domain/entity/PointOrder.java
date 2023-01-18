@@ -26,8 +26,8 @@ public class PointOrder {
 
     private int usePointAmt;
 
-    private void setPointUseAmt(int pointUseAmt) {
-        this.usePointAmt = pointUseAmt;
+    private void setPointUseAmt(int usePointAmt) {
+        this.usePointAmt = usePointAmt;
     }
 
     public void setOrder(Order order) {
@@ -38,10 +38,10 @@ public class PointOrder {
         this.point = point;
     }
 
-    public static PointOrder createPointOrder(Order order, int pointUseAmt) {
+    public static PointOrder createPointOrder(Order order, int usePointAmt) {
         PointOrder pointOrder = new PointOrder();
         pointOrder.setOrder(order);
-        pointOrder.setPointUseAmt(pointUseAmt);
+        pointOrder.setPointUseAmt(usePointAmt);
 
         return pointOrder;
     }

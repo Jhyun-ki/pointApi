@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,16 +23,18 @@ public class Account extends BaseEntity {
 
     private int totalPointAmt;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = ALL)
     private List<Point> points = new ArrayList<>();
 
-    public Account(String userName) {
+    private Account(String userName) {
         this.userName = userName;
     }
 
-    public void addPoint(Point point) {
-        this.points.add(point);
-        point.setAccount(this);
+    public void addPoint(Point... points) {
+        for (Point point : points) {
+            this.points.add(point);
+            point.setAccount(this);
+        }
     }
 
     public void plusTotalPointAmt(int pointAmt) {

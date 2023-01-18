@@ -25,11 +25,25 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private int order_price;
+    private int price;
 
-    private int item_count;
+    private int count;
+
+    private OrderItem(Item item, int price, int count) {
+        this.item = item;
+        this.price = price;
+        this.count = count;
+    }
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public static OrderItem createOrderItem(Item item, int price, int count) {
+        return new OrderItem(item, price, count);
+    }
+
+    public int getTotalPrice() {
+        return getPrice() * getCount();
     }
 }

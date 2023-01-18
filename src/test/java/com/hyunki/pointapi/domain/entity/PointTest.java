@@ -5,9 +5,6 @@ import com.hyunki.pointapi.domain.enums.PointType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -72,15 +69,15 @@ class PointTest {
         Point point = Point.createPoint(Account.createAccount("hkjung"), 15000, PointType.PAY);
 
         //when
-        Point usedPoint = Point.usePoint(point, pointOrders);
+        point.usePoint(pointOrders);
 
         
         //then
-        assertThat(usedPoint.getRemainPointAmt()).isEqualTo(6500);
+        assertThat(point.getRemainPointAmt()).isEqualTo(6500);
     }
 
     @Test
-    @DisplayName("남은 포인트 금액 차감 시 마이너스 금액이 될 경우 Exception을 발생 시킨다.")
+    @DisplayName("남은 포인트 금액 차감 시 마이너스 금액이 입력 될 경우 Exception을 발생 시킨다.")
     public void usePoint_input_minus_amount() throws Exception {
         //given
         Point point = Point.createPoint(Account.createAccount("hkjung"), 5000, PointType.PAY);
@@ -90,7 +87,7 @@ class PointTest {
 
         //when & then
         assertThrows(IllegalStateException.class, () -> {
-            Point.usePoint(point, pointOrders);
+            point.usePoint(pointOrders);
         });
     }
 
@@ -107,7 +104,7 @@ class PointTest {
 
         //when & then
         assertThrows(IllegalStateException.class, () -> {
-            Point.usePoint(point, pointOrders);
+            point.usePoint(pointOrders);
         });
     }
 }

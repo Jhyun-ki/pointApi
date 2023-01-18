@@ -77,6 +77,23 @@ public class Point extends BaseEntity {
     }
 
     /**
+     * 남은 포인트 금액 원복 메서드
+     */
+    public void plusRemainPointAmt(int addPointAmt) {
+        int remainPointAmt = this.remainPointAmt + addPointAmt;
+
+        if(remainPointAmt > this.pointAmt) {
+            throw new IllegalStateException("남은 포인트 금액이 포인트 금액 보다 클 수 없습니다.");
+        }
+
+        if(remainPointAmt < 0) {
+            throw new IllegalStateException("남은 포인트 금액은 마이너스 금액이 될 수 없습니다.");
+        }
+
+        this.remainPointAmt = remainPointAmt;
+    }
+
+    /**
      * 포인트 적립 메서드
      */
     public static Point createPoint(Account account, int pointAmt, PointType pointType) {
@@ -89,16 +106,15 @@ public class Point extends BaseEntity {
     /**
      * 포인트 차감 메서드
      */
-    public static Point usePoint(Point point, PointOrder... pointOrders) {
+    public void usePoint(PointOrder... pointOrders) {
         int totalUsePointAmt = 0;
         for (PointOrder pointOrder : pointOrders) {
-            point.addPointOrder(pointOrder);
+            this.addPointOrder(pointOrder);
             totalUsePointAmt += pointOrder.getUsePointAmt();
         }
 
-        point.getAccount().minusTotalPointAmt(totalUsePointAmt);
-        point.minusRemainPointAmt(totalUsePointAmt);
+        this.minusRemainPointAmt(totalUsePointAmt);
+        this.getAccount().minusTotalPointAmt(totalUsePointAmt);
 
-        return point;
     }
 }
