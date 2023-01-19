@@ -19,6 +19,7 @@ public class Account extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(unique = true)
     private String username;
 
     private int totalPointAmt;

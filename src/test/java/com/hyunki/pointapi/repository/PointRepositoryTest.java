@@ -11,7 +11,6 @@ import org.springframework.test.annotation.Rollback;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Rollback(value = false)
 class PointRepositoryTest {
 
     @Autowired
