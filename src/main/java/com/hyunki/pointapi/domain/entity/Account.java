@@ -19,15 +19,15 @@ public class Account extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    private String userName;
+    private String username;
 
     private int totalPointAmt;
 
     @OneToMany(mappedBy = "account", cascade = ALL)
     private List<Point> points = new ArrayList<>();
 
-    private Account(String userName) {
-        this.userName = userName;
+    private Account(String username) {
+        this.username = username;
     }
 
     public void addPoint(Point... points) {
@@ -44,14 +44,14 @@ public class Account extends BaseEntity {
     public void minusTotalPointAmt(int pointAmt) {
         int totalPointAmt = this.totalPointAmt - pointAmt;
         if(totalPointAmt < 0) {
-            throw new IllegalStateException("-금액은 불가");
+            throw new IllegalStateException("- 금액은 불가");
         }
 
         this.totalPointAmt = totalPointAmt;
     }
 
-    public static Account createAccount(String userName) {
-        Account account = new Account(userName);
+    public static Account createAccount(String username) {
+        Account account = new Account(username);
         return account;
     }
 }
