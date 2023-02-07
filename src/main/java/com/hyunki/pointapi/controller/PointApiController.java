@@ -4,9 +4,10 @@ import com.hyunki.pointapi.domain.dto.CreatePointRequest;
 import com.hyunki.pointapi.domain.dto.CreatePointResponse;
 import com.hyunki.pointapi.domain.dto.PointResource;
 import com.hyunki.pointapi.domain.entity.Point;
+import com.hyunki.pointapi.exception.validator.ErrorValidateResource;
 import com.hyunki.pointapi.service.PointService;
+import com.hyunki.pointapi.exception.validator.CreatePointValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -28,17 +29,19 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class PointApiController {
     private final PointService pointService;
 
+    private final CreatePointValidator createPointValidator;
+
     @PostMapping
     public ResponseEntity point(@RequestBody @Valid CreatePointRequest createPointRequest,
                                 Errors errors) {
 
+        createPointValidator.validate(createPointRequest, errors);
         if(errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
 
         Point createdPoint = pointService.createPoint(createPointRequest);
         CreatePointResponse createPointResponse = new CreatePointResponse(createdPoint);
-
 
         WebMvcLinkBuilder selfLinkBuilder = linkTo(PointApiController.class).slash(createPointResponse.getPointId());
         URI createURI = selfLinkBuilder.toUri();
@@ -48,5 +51,9 @@ public class PointApiController {
         pointResource.add(of("/docs/index.html#resources-point-create", "profile"));
 
         return ResponseEntity.created(createURI).body(pointResource);
+    }
+
+    private static ResponseEntity badRequest(Errors errors) {
+        return ResponseEntity.badRequest().body(new ErrorValidateResource(errors));
     }
 }

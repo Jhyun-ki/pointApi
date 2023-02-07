@@ -45,7 +45,7 @@ public class Account extends BaseEntity {
     public void minusTotalPointAmt(int pointAmt) {
         int totalPointAmt = this.totalPointAmt - pointAmt;
         if(totalPointAmt < 0) {
-            throw new IllegalStateException("- 금액은 불가");
+            throw new IllegalStateException("유저 포인트 금액 이상(- 금액 불가)");
         }
 
         this.totalPointAmt = totalPointAmt;

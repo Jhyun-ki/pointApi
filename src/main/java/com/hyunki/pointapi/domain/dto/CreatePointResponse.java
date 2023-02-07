@@ -5,7 +5,6 @@ import com.hyunki.pointapi.domain.enums.PointStatus;
 import com.hyunki.pointapi.domain.enums.PointType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -18,7 +17,6 @@ public class CreatePointResponse extends RepresentationModel<CreatePointResponse
     private int pointAmt;
     private PointType pointType;
     private PointStatus pointStatus;
-
 
     public CreatePointResponse(Point point) {
         pointId = point.getId();

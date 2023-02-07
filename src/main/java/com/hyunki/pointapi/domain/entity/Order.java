@@ -1,6 +1,7 @@
 package com.hyunki.pointapi.domain.entity;
 
 import com.hyunki.pointapi.domain.enums.OrderStatus;
+import com.hyunki.pointapi.exception.custom.NotEnoughPointException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -74,7 +75,7 @@ public class Order extends BaseEntity{
         order.setOrderPrice(orderPrice);
 
         if(account.getTotalPointAmt() < orderPrice) {
-            throw new IllegalStateException("보유 포인트가 부족 합니다.");
+            throw new NotEnoughPointException("보유 포인트가 부족 합니다.");
         }
 
         //포인트 차감

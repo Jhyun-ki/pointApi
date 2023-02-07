@@ -17,8 +17,6 @@ public class Item extends BaseEntity{
     @GeneratedValue
     @Column(name = "item_id")
     private Long id;
-
     private String itemName;
-
     private int itemPrice;
 }
