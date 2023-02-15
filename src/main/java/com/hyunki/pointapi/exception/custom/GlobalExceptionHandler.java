@@ -21,7 +21,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errorCode("INTERNAL_SERVER_ERROR")
                 .build();
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorDtoResource(errorDto));
     }
 
     @ExceptionHandler(NotFound.class)
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errorCode("NOT_FOUND_ERROR")
                 .build();
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDto);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDtoResource(errorDto));
     }
 
     @ExceptionHandler(IllegalStateException.class)
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errorCode("ILLEGAL_STATE_EXCEPTION_ERROR")
                 .build();
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorDtoResource(errorDto));
     }
 
     @ExceptionHandler(NotEnoughPointException.class)
@@ -53,6 +53,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .message(e.getMessage())
                 .errorCode("NOT_ENOUGH_POINT")
                 .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDto);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDtoResource(errorDto));
     }
 }

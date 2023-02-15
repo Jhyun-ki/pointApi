@@ -3,6 +3,7 @@ package com.hyunki.pointapi.repository;
 
 import com.hyunki.pointapi.domain.entity.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface PointRepository extends JpaRepository<Point, Long> {
+public interface PointRepository extends JpaRepository<Point, Long>, PointRepositoryCustom {
 }

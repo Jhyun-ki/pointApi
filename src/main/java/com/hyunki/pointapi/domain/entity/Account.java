@@ -3,6 +3,7 @@ package com.hyunki.pointapi.domain.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account extends BaseEntity {
     @Id
@@ -39,7 +41,14 @@ public class Account extends BaseEntity {
     }
 
     public void plusTotalPointAmt(int pointAmt) {
+        if(pointAmt < 0) {
+            throw new IllegalStateException("포인트 금액 이상(- 금액 불가)");
+        }
+
         this.totalPointAmt += pointAmt;
+        if(this.totalPointAmt < 0) {
+            throw new IllegalStateException("유저 포인트 금액 이상(- 금액 불가)");
+        }
     }
 
     public void minusTotalPointAmt(int pointAmt) {

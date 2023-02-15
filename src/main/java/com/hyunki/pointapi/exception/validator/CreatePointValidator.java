@@ -13,8 +13,8 @@ public class CreatePointValidator {
             errors.rejectValue("username", "USERNAME_FIELD_NOT_BLANK", "username 필드는 빈 값일 수 없습니다.");
         }
 
-        if(createPointRequest.getPointAmt() < 10) {
-            errors.rejectValue("pointAmt", "POINT_AMT_FIELD_NOT_BELOW_TEN", "pointAmt 필드는 10 포인트 미만일 수 없습니다.");
+        if(createPointRequest.getPointAmt() <= 0) {
+            errors.rejectValue("pointAmt", "POINT_AMT_FIELD_NOT_BELOW_ZERO", "pointAmt 필드는 0 포인트 이하일 수 없습니다.");
         }
     }
 }

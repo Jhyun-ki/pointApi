@@ -3,14 +3,10 @@ package com.hyunki.pointapi.domain.dto;
 import com.hyunki.pointapi.domain.entity.Point;
 import com.hyunki.pointapi.domain.enums.PointStatus;
 import com.hyunki.pointapi.domain.enums.PointType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
 public class CreatePointResponse extends RepresentationModel<CreatePointResponse> {
     private Long pointId;
     private String username;
