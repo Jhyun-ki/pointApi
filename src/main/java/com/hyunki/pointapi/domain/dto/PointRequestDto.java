@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class CreatePointRequest {
+public class PointRequestDto {
     private String username;
     private int pointAmt;
 }

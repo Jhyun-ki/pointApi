@@ -1,11 +1,9 @@
 package com.hyunki.pointapi.exception.custom;
 
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -21,7 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errorCode("INTERNAL_SERVER_ERROR")
                 .build();
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorDtoResource(errorDto));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
     }
 
     @ExceptionHandler(NotFound.class)
@@ -32,7 +30,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errorCode("NOT_FOUND_ERROR")
                 .build();
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDtoResource(errorDto));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDto);
     }
 
     @ExceptionHandler(IllegalStateException.class)
@@ -43,7 +41,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .errorCode("ILLEGAL_STATE_EXCEPTION_ERROR")
                 .build();
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorDtoResource(errorDto));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
     }
 
     @ExceptionHandler(NotEnoughPointException.class)
@@ -53,6 +51,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .message(e.getMessage())
                 .errorCode("NOT_ENOUGH_POINT")
                 .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDtoResource(errorDto));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDto);
     }
 }

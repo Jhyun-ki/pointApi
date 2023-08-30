@@ -1,6 +1,6 @@
 package com.hyunki.pointapi.service;
 
-import com.hyunki.pointapi.domain.dto.CreatePointRequest;
+import com.hyunki.pointapi.domain.dto.PointRequestDto;
 import com.hyunki.pointapi.domain.entity.Account;
 import com.hyunki.pointapi.domain.entity.Point;
 import com.hyunki.pointapi.domain.enums.PointType;
@@ -17,9 +17,9 @@ public class PointService {
     private final AccountService accountService;
 
     @Transactional
-    public Point createPoint(CreatePointRequest createPointRequest) {
-        Account findAccount = accountService.getOrCreateAccount(createPointRequest.getUsername());
-        Point point = Point.createPoint(findAccount, createPointRequest.getPointAmt(), PointType.PAY);
+    public Point createPoint(PointRequestDto pointRequestDto) {
+        Account findAccount = accountService.getOrCreateAccount(pointRequestDto.getUsername());
+        Point point = Point.createPoint(findAccount, pointRequestDto.getPointAmt(), PointType.PAY);
 
         Point savedPoint = pointRepository.save(point);
 

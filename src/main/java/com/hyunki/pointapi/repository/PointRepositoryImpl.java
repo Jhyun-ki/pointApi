@@ -1,10 +1,9 @@
 package com.hyunki.pointapi.repository;
 
 
-import com.hyunki.pointapi.domain.dto.PointDto;
+import com.hyunki.pointapi.domain.dto.PointResponseDto;
 import com.hyunki.pointapi.domain.dto.PointSearchCondition;
-import com.hyunki.pointapi.domain.dto.QPointDto;
-import com.hyunki.pointapi.domain.entity.Point;
+import com.hyunki.pointapi.domain.dto.QPointResponseDto;
 import com.hyunki.pointapi.domain.enums.PointType;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -37,9 +36,9 @@ public class PointRepositoryImpl implements PointRepositoryCustom{
 
 
     @Override
-    public Page<PointDto> search(PointSearchCondition condition, Pageable pageable) {
-        List<PointDto> content = queryFactory
-                .select(new QPointDto(
+    public Page<PointResponseDto> search(PointSearchCondition condition, Pageable pageable) {
+        List<PointResponseDto> content = queryFactory
+                .select(new QPointResponseDto(
                         point.id.as("pointId"),
                         account.username,
                         point.pointAmt,
